@@ -30,7 +30,7 @@ pipelines:
       - step:
           name: Migrate Repository Secrets
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -49,7 +49,7 @@ pipelines:
           name: Migrate Production Environment Secrets
           deployment: production
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -68,7 +68,7 @@ pipelines:
       - step:
           name: Migrate Repository Secrets
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -78,7 +78,7 @@ pipelines:
           name: Migrate Development Environment Secrets
           deployment: development
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -89,7 +89,7 @@ pipelines:
           name: Migrate Staging Environment Secrets
           deployment: staging
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -100,7 +100,7 @@ pipelines:
           name: Migrate Production Environment Secrets
           deployment: production
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
@@ -155,7 +155,7 @@ pipelines:
           name: Migrate Production Secrets
           deployment: production
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'myorg/my-app'
@@ -167,7 +167,7 @@ pipelines:
           name: Migrate Staging Secrets
           deployment: staging
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
+            - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'myorg/my-app'
