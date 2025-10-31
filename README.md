@@ -73,6 +73,8 @@ pipelines:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
                 SECRET_NAMES: 'SHARED_SECRET_1,SHARED_SECRET_2'
+                SHARED_SECRET_1: $SHARED_SECRET_1
+                SHARED_SECRET_2: $SHARED_SECRET_1
 
       - step:
           name: Migrate Development Environment Secrets
@@ -80,10 +82,12 @@ pipelines:
           script:
             - pipe: aligent/migrate-secrets-pipe:latest
               variables:
+                ENVIRONMENT: 'development'
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
                 SECRET_NAMES: 'DEV_DATABASE_URL,DEV_API_KEY'
-                ENVIRONMENT: 'development'
+                DEV_DATABASE_URL: $DEV_DATABASE_URL
+                DEV_API_KEY: $DEV_API_KEY
 
       - step:
           name: Migrate Staging Environment Secrets
@@ -91,10 +95,12 @@ pipelines:
           script:
             - pipe: aligent/migrate-secrets-pipe:latest
               variables:
+                ENVIRONMENT: 'staging'
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
                 SECRET_NAMES: 'STAGING_DATABASE_URL,STAGING_API_KEY'
-                ENVIRONMENT: 'staging'
+                STAGING_DATABASE_URL: $STAGING_DATABASE_URL
+                STAGING_API_KEY: $STAGING_API_KEY
 
       - step:
           name: Migrate Production Environment Secrets
@@ -102,10 +108,12 @@ pipelines:
           script:
             - pipe: aligent/migrate-secrets-pipe:latest
               variables:
+                ENVIRONMENT: 'production'
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'owner/repo-name'
                 SECRET_NAMES: 'PROD_DATABASE_URL,PROD_API_KEY'
-                ENVIRONMENT: 'production'
+                PROD_DATABASE_URL: $PROD_DATABASE_URL
+                PROD_API_KEY: $PROD_API_KEY 
 ```
 
 ## Parameters
@@ -144,35 +152,43 @@ pipelines:
       - step:
           name: Migrate Repository Secrets
           script:
-            - pipe: your-workspace/migrate-secrets-pipe:latest
-              variables:
-                GITHUB_TOKEN: $GITHUB_TOKEN
-                GITHUB_REPO: 'myorg/my-app'
-                SECRET_NAMES: 'NPM_TOKEN,DOCKER_PASSWORD,SLACK_WEBHOOK'
-
-      # Step 2: Migrate production environment secrets
-      - step:
-          name: Migrate Production Secrets
-          deployment: production
-          script:
             - pipe: aligent/migrate-secrets-pipe:latest
               variables:
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'myorg/my-app'
-                SECRET_NAMES: 'DATABASE_URL,API_KEY,REDIS_URL'
-                ENVIRONMENT: 'production'
+                SECRET_NAMES: 'NPM_TOKEN,DOCKER_PASSWORD,SLACK_WEBHOOK'
+                NPM_TOKEN: $NPM_TOKEN
+                DOCKER_PASSWORD: $DOCKER_PASSWORD
+                SLACK_WEBHOOK: $SLACK_WEBHOOK
 
-      # Step 3: Migrate staging environment secrets
+      # Step 2: Migrate staging environment secrets
       - step:
           name: Migrate Staging Secrets
           deployment: staging
           script:
             - pipe: aligent/migrate-secrets-pipe:latest
               variables:
+                ENVIRONMENT: 'staging'
                 GITHUB_TOKEN: $GITHUB_TOKEN
                 GITHUB_REPO: 'myorg/my-app'
                 SECRET_NAMES: 'DATABASE_URL,API_KEY,REDIS_URL'
-                ENVIRONMENT: 'staging'
+                DATABASE_URL: $DATABASE_URL
+                API_KEY: $API_KEY
+                REDIS_URL: $REDIS_URL
+      # Step 3: Migrate production environment secrets
+      - step:
+          name: Migrate Production Secrets
+          deployment: production
+          script:
+            - pipe: aligent/migrate-secrets-pipe:latest
+              variables:
+                ENVIRONMENT: 'production'
+                GITHUB_TOKEN: $GITHUB_TOKEN
+                GITHUB_REPO: 'myorg/my-app'
+                SECRET_NAMES: 'DATABASE_URL,API_KEY,REDIS_URL'
+                DATABASE_URL: $DATABASE_URL
+                API_KEY: $API_KEY
+                REDIS_URL: $REDIS_URL
 ```
 
 ## Troubleshooting
