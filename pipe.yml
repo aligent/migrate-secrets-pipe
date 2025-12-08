@@ -1,0 +1,21 @@
+name: Migrate Secrets to GitHub
+description: Migrates secret repository and environment variables from Bitbucket to GitHub
+image: migrate-secrets-pipe:latest
+
+variables:
+  - name: GITHUB_TOKEN
+    description: GitHub Personal Access Token with repo and admin:repo_hook scopes
+    required: true
+  - name: GITHUB_REPO
+    description: GitHub repository in format 'owner/repo'
+    required: true
+  - name: SECRET_NAMES
+    description: Comma-separated list of secret variable names to migrate
+    required: true
+  - name: ENVIRONMENT
+    description: GitHub environment name (optional, for environment-specific secrets)
+    required: false
+  - name: DEBUG
+    description: Enable debug logging (true/false)
+    default: "false"
+    required: false
