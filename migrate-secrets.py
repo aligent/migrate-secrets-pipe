@@ -134,6 +134,12 @@ def migrate_secrets(
         # Get secret value from environment variable
         secret_value = os.environ.get(secret_name, '')
 
+        # GitHub doesn't allow secrets starting with "GITHUB_", so prefix with underscore
+        github_secret_name = secret_name
+        if secret_name.startswith("GITHUB_"):
+            github_secret_name = "_" + secret_name
+            log_warning(f"  ⚠ Renaming to '{github_secret_name}' (GitHub reserves GITHUB_ prefix)")
+
         if not secret_value:
             log_error(f"  ✗ Secret '{secret_name}' not found in Bitbucket pipeline variables")
             missing_count += 1
@@ -142,16 +148,16 @@ def migrate_secrets(
         # Set the secret in GitHub
         if environment:
             log_info(f"  → Setting as environment secret in environment: {environment}")
-            success = set_github_secret(secret_name, secret_value, github_repo, environment)
+            success = set_github_secret(github_secret_name, secret_value, github_repo, environment)
         else:
             log_info("  → Setting as repository secret")
-            success = set_github_secret(secret_name, secret_value, github_repo)
+            success = set_github_secret(github_secret_name, secret_value, github_repo)
 
         if success:
-            log_success(f"  ✓ Successfully set secret: {secret_name}")
+            log_success(f"  ✓ Successfully set secret: {github_secret_name}")
             success_count += 1
         else:
-            log_error(f"  ✗ Failed to set secret: {secret_name}")
+            log_error(f"  ✗ Failed to set secret: {github_secret_name}")
             failure_count += 1
 
     return success_count, failure_count, missing_count
